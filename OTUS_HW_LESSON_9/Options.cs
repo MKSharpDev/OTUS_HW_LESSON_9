@@ -11,16 +11,20 @@ namespace OTUS_HW_LESSON_9
         public Game gameBuild()
         {
             bool sasuccess = false;
-            Messeger messeger = new Messeger();
+            //Messeger messeger = new Messeger();
+            MessegeSender sender = new MessegeSender();
+            
 
             while (!sasuccess)
             {
                 try
                 {
-                    messeger.attemp();
+                    //messeger.attemp();
+                    sender.send(new AttempMassage());
                     int attemps = int.Parse(Console.ReadLine());
 
-                    messeger.range();
+                    //messeger.range();
+                    sender.send(new RangeMassage());
                     int range = int.Parse(Console.ReadLine());
                     sasuccess = true;
 
@@ -28,7 +32,8 @@ namespace OTUS_HW_LESSON_9
                 }
                 catch (Exception Ex)
                 {
-                    messeger.error(Ex);
+                    //messeger.error(Ex);
+                    sender.send(new ErrorMessage(Ex));
                 }
 
 

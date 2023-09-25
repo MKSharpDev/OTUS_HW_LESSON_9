@@ -25,40 +25,54 @@ namespace OTUS_HW_LESSON_9
         public void StartGame()
         {
             Random random = new Random();
-            bool sasuccess = false;
+            bool endGame = false;
             int needed = random.Next(0, _range);
-            Messeger messeger = new Messeger();
-            int attemp = _attemps;
-            messeger.startGame();
 
-            while (!sasuccess)
+
+            //Messeger messeger = new Messeger();
+            MessegeSender sender = new MessegeSender();
+
+            int attemp = _attemps;
+            //messeger.startGame();
+            sender.send(new StartGameMassage());
+
+            while (!endGame)
             {
                 try
                 {
                     if(attemp == 0)
                     {
-                        messeger.failure();
+                        //messeger.failure();
+                        endGame = true;
+                        sender.send(new FailureMassage());
+                        break;
                     }
                     int inn = int.Parse(Console.ReadLine());
                     if (needed == inn)
                     {
-                        sasuccess = true;
-                        messeger.success();
+                        endGame = true;
+                        //messeger.success();
+                        sender.send(new SuccessMassage());
+                       
                     }
                     else if (needed > inn)
                     {
-                        messeger.retryTakingValueAndAttemp("больше", --attemp);
+                        //messeger.retryTakingValueAndAttemp("больше", --attemp);
+                        sender.send(new RetryTakingValueAndAttemp("больше", --attemp));
                            
                         
                     }
                     else if (needed < inn)
                     {
-                        messeger.retryTakingValueAndAttemp("меньше", --attemp);                      
+                        //messeger.retryTakingValueAndAttemp("меньше", --attemp);
+                        sender.send(new RetryTakingValueAndAttemp("меньше", --attemp));
+
                     }
                 }
                 catch (Exception Ex)
                 {
-                    messeger.error(Ex);
+                    sender.send(new ErrorMessage(Ex));
+                    //messeger.error(Ex);
                 }
             }
         }

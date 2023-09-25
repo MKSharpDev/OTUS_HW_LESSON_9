@@ -7,57 +7,154 @@ using System.Threading.Tasks;
 namespace OTUS_HW_LESSON_9
 {
 
-    public class Messeger
+    public class IMessage
+    {
+        public virtual void sendMassage()
+        {
+            Console.WriteLine();
+        }
+    }
+
+    public class MessegeSender
     {
 
-        public void helloMessege()
+        public void send(IMessage message)
+        {
+            message.sendMassage();
+        }
+    }
+
+    public class HelloMassage: IMessage
+    {
+        public override void sendMassage()
         {
             Console.WriteLine("Привет! Это игра Угадай число");
         }
+    }
 
-        public void startGame()
+    public class StartGameMassage : IMessage
+    {
+        public override void sendMassage()
         {
             Console.WriteLine("Игра началась! Введи число!");
-
         }
+    }
 
-        public void retryTakingValue(string value)
-
-        {
-            Console.WriteLine($"Нет! Загаданное число {value}! Попробуй еще раз!");
-        }
-        public void retryTakingValueAndAttemp(string value, int attemps)
-
-        {
-            Console.WriteLine($"Нет! Загаданное число {value}! Осталось {attemps} попыток!");
-        }
-
-        public void success() 
+    public class SuccessMassage : IMessage
+    {
+        public override void sendMassage()
         {
             Console.WriteLine("Правильно! Поздравляю ты выйграл!");
         }
+    }
 
-        public void failure()
+    public class FailureMassage : IMessage
+    {
+        public override void sendMassage()
         {
             Console.WriteLine("Попытки угадать закончились! Ты проиграл");
-        }   
-
-        public void error(Exception Ex)
-        {
-            Console.WriteLine($"Что то не так! \n{Ex.Message} \nПопробуй еще раз! ");
         }
+    }
 
-
-        public void attemp()
+    public class AttempMassage : IMessage
+    {
+        public override void sendMassage()
         {
             Console.WriteLine("Введите число попыток");
         }
+    }
 
-        public void range()
+    public class RangeMassage : IMessage
+    {
+        public override void sendMassage()
         {
             Console.WriteLine("Введите диапазон чисел");
         }
-
     }
+    public class ErrorMessage : IMessage
+    {
+        Exception _ex;
+
+
+        public ErrorMessage(Exception Ex)
+        {
+                _ex = Ex;
+        }
+        public override void sendMassage()
+        {
+                Console.WriteLine($"Что то не так! {_ex.Message}Попробуй еще раз! ");
+        }
+    }
+    
+
+    public class RetryTakingValueAndAttemp : IMessage
+    {
+        string _value;
+        int _attemps;
+        public RetryTakingValueAndAttemp(string value, int attemps)
+        {
+                _value = value;
+                _attemps = attemps;
+        }
+        public override void sendMassage()
+        {
+            Console.WriteLine($"Нет! Загаданное число {_value}! Осталось {_attemps} попыток!");
+        }
+    }
+
+    
+
+    //public class Messeger
+    //{
+
+    //    public void helloMessege()
+    //    {
+    //        Console.WriteLine("Привет! Это игра Угадай число");
+    //    }
+
+    //    public void startGame()
+    //    {
+    //        Console.WriteLine("Игра началась! Введи число!");
+
+    //    }
+
+    //    public void retryTakingValue(string value)
+
+    //    {
+    //        Console.WriteLine($"Нет! Загаданное число {value}! Попробуй еще раз!");
+    //    }
+    //    public void retryTakingValueAndAttemp(string value, int attemps)
+
+    //    {
+    //        Console.WriteLine($"Нет! Загаданное число {value}! Осталось {attemps} попыток!");
+    //    }
+
+    //    public void success() 
+    //    {
+    //        Console.WriteLine("Правильно! Поздравляю ты выйграл!");
+    //    }
+
+    //    public void failure()
+    //    {
+    //        Console.WriteLine("Попытки угадать закончились! Ты проиграл");
+    //    }   
+
+    //    public void error(Exception Ex)
+    //    {
+    //        Console.WriteLine($"Что то не так! \n{Ex.Message} \nПопробуй еще раз! ");
+    //    }
+
+
+    //    public void attemp()
+    //    {
+    //        Console.WriteLine("Введите число попыток");
+    //    }
+
+    //    public void range()
+    //    {
+    //        Console.WriteLine("Введите диапазон чисел");
+    //    }
+
+    //}
 
 }
