@@ -8,18 +8,25 @@ namespace OTUS_HW_LESSON_9
 {
     public class Game
     {
-        int _attemps;
-        int _range;
-        public Game() 
+        private int _attemps;
+        private int _range;
+        MessegeSender _sender;
+        public int Attemps { get { return _attemps; } set { _attemps = value; } }
+
+        public int Range { get { return _range; } set { _range = value; } }
+
+        public Game(MessegeSender sender) 
         {
             _attemps = 10;
             _range = 100;
-        }
+            _sender = sender;
+    }
 
-        public Game(int attemps, int range) 
+        public Game(int attemps, int range, MessegeSender sender) 
         { 
             _attemps = attemps;
             _range = range;
+            _sender = sender;
         }
 
         public void StartGame()
@@ -30,11 +37,11 @@ namespace OTUS_HW_LESSON_9
 
 
             //Messeger messeger = new Messeger();
-            MessegeSender sender = new MessegeSender();
+            //MessegeSender sender = new MessegeSender();
 
             int attemp = _attemps;
             //messeger.startGame();
-            sender.send(new StartGameMassage());
+            _sender.Send(new StartGameMassage());
 
             while (!endGame)
             {
@@ -44,7 +51,7 @@ namespace OTUS_HW_LESSON_9
                     {
                         //messeger.failure();
                         endGame = true;
-                        sender.send(new FailureMassage());
+                        _sender.Send(new FailureMassage());
                         break;
                     }
                     int inn = int.Parse(Console.ReadLine());
@@ -52,26 +59,26 @@ namespace OTUS_HW_LESSON_9
                     {
                         endGame = true;
                         //messeger.success();
-                        sender.send(new SuccessMassage());
+                        _sender.Send(new SuccessMassage());
                        
                     }
                     else if (needed > inn)
                     {
                         //messeger.retryTakingValueAndAttemp("больше", --attemp);
-                        sender.send(new RetryTakingValueAndAttemp("больше", --attemp));
+                        _sender.Send(new RetryTakingValueAndAttemp("больше", --attemp));
                            
                         
                     }
                     else if (needed < inn)
                     {
                         //messeger.retryTakingValueAndAttemp("меньше", --attemp);
-                        sender.send(new RetryTakingValueAndAttemp("меньше", --attemp));
+                        _sender.Send(new RetryTakingValueAndAttemp("меньше", --attemp));
 
                     }
                 }
                 catch (Exception Ex)
                 {
-                    sender.send(new ErrorMessage(Ex));
+                    _sender.Send(new ErrorMessage(Ex));
                     //messeger.error(Ex);
                 }
             }
