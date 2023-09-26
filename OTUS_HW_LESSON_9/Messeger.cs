@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 namespace OTUS_HW_LESSON_9
 {
 
-    public class IMessage
+    public interface IMessage
     {
-        public virtual void sendMassage()
+        public void sendMassage()
         {
-            Console.WriteLine();
+            
         }
     }
 
@@ -26,7 +26,7 @@ namespace OTUS_HW_LESSON_9
 
     public class HelloMassage: IMessage
     {
-        public override void sendMassage()
+        public void sendMassage()
         {
             Console.WriteLine("Привет! Это игра Угадай число");
         }
@@ -34,7 +34,7 @@ namespace OTUS_HW_LESSON_9
 
     public class StartGameMassage : IMessage
     {
-        public override void sendMassage()
+        public void sendMassage()
         {
             Console.WriteLine("Игра началась! Введи число!");
         }
@@ -42,7 +42,7 @@ namespace OTUS_HW_LESSON_9
 
     public class SuccessMassage : IMessage
     {
-        public override void sendMassage()
+        public  void sendMassage()
         {
             Console.WriteLine("Правильно! Поздравляю ты выйграл!");
         }
@@ -50,7 +50,7 @@ namespace OTUS_HW_LESSON_9
 
     public class FailureMassage : IMessage
     {
-        public override void sendMassage()
+        public void sendMassage()
         {
             Console.WriteLine("Попытки угадать закончились! Ты проиграл");
         }
@@ -58,7 +58,7 @@ namespace OTUS_HW_LESSON_9
 
     public class AttempMassage : IMessage
     {
-        public override void sendMassage()
+        public void sendMassage()
         {
             Console.WriteLine("Введите число попыток");
         }
@@ -66,7 +66,7 @@ namespace OTUS_HW_LESSON_9
 
     public class RangeMassage : IMessage
     {
-        public override void sendMassage()
+        public void sendMassage()
         {
             Console.WriteLine("Введите диапазон чисел");
         }
@@ -80,7 +80,7 @@ namespace OTUS_HW_LESSON_9
         {
                 _ex = Ex;
         }
-        public override void sendMassage()
+        public void sendMassage()
         {
                 Console.WriteLine($"Что то не так! {_ex.Message}Попробуй еще раз! ");
         }
@@ -96,7 +96,7 @@ namespace OTUS_HW_LESSON_9
                 _value = value;
                 _attemps = attemps;
         }
-        public override void sendMassage()
+        public void sendMassage()
         {
             Console.WriteLine($"Нет! Загаданное число {_value}! Осталось {_attemps} попыток!");
         }
