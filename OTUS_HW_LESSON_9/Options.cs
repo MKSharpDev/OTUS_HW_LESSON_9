@@ -8,55 +8,68 @@ namespace OTUS_HW_LESSON_9
 {
     public class Options
     {
-        MessegeSender _sender;
-        Game _game;
-        public Options(Game game , MessegeSender sender) 
+        private int _attemps;
+        private int _range;
+        public int Attemps { get { return _attemps; } set { _attemps = value; } }
+
+        public int Range { get { return _range; } set { _range = value; } }
+
+
+        public static int AttemptsByDefault = 5;
+        public static int RangeByDefault = 100;
+        public Options()
         {
-            _sender = sender;
-            _game  = game;
+            _attemps = AttemptsByDefault;
+            _range = RangeByDefault;
         }
-        public Game GameConfigure()
+
+
+
+
+
+        public Options GameConfigure(MessegeSender sender)
         {
             bool sasuccess = false;
+            Options options = new Options();
 
 
-            
+
             while (!sasuccess)
             {
                 try
                 {
-                    _sender.Send(new OptionsMessage());
+                    sender.Send(new OptionsMessage());
                     string startGameConfig = Console.ReadLine();
                     if (startGameConfig.ToLower() == "y")
                     {
 
-                        _sender.Send(new AttempMassage());
-                        _game.Attemps = int.Parse(Console.ReadLine());
+                        sender.Send(new AttempMassage());
+                        options.Attemps = int.Parse(Console.ReadLine());
 
-                        _sender.Send(new RangeMassage());
-                        _game.Range = int.Parse(Console.ReadLine());
+                        sender.Send(new RangeMassage());
+                        options.Range = int.Parse(Console.ReadLine());
                         sasuccess = true;
 
-                        return _game;
+                        return options;
                     }
                     else if (startGameConfig.ToLower() == "n")
                     {
                         sasuccess = true;
-                        return _game;
+                        return options;
                     }
                     else
                     {
-                        _sender.Send(new Warning());
+                        sender.Send(new Warning());
                     }
                 }
                 catch (Exception Ex)
                 {
-                    _sender.Send(new ErrorMessage(Ex));
+                    sender.Send(new ErrorMessage(Ex));
                 }
 
 
             }
-            return new Game(_sender);
+            return options;
         }
     }
 }

@@ -8,24 +8,14 @@ namespace OTUS_HW_LESSON_9
 {
     public class Game
     {
-        private int _attemps;
-        private int _range;
+
         MessegeSender _sender;
-        public int Attemps { get { return _attemps; } set { _attemps = value; } }
+        Options _options;
 
-        public int Range { get { return _range; } set { _range = value; } }
 
-        public Game(MessegeSender sender) 
+        public Game(Options options, MessegeSender sender) 
         {
-            _attemps = 10;
-            _range = 100;
-            _sender = sender;
-    }
-
-        public Game(int attemps, int range, MessegeSender sender) 
-        { 
-            _attemps = attemps;
-            _range = range;
+            _options = options;
             _sender = sender;
         }
 
@@ -33,13 +23,13 @@ namespace OTUS_HW_LESSON_9
         {
             Random random = new Random();
             bool endGame = false;
-            int needed = random.Next(0, _range);
+            int needed = random.Next(0, _options.Range) ;
 
 
             //Messeger messeger = new Messeger();
             //MessegeSender sender = new MessegeSender();
 
-            int attemp = _attemps;
+            int attemp = _options.Attemps;
             //messeger.startGame();
             _sender.Send(new StartGameMassage());
 
