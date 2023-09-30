@@ -6,80 +6,185 @@ using System.Threading.Tasks;
 
 namespace OTUS_HW_LESSON_9
 {
-    #region LCP messeger 
-    public abstract class Message
-    {
-        private string _massage;
-        public string Massage { get { return _massage; } set { _massage = value; } }
-    }
+    //#region LCP messeger 
+    //public abstract class Message
+    //{
+    //    private string _massage;
+    //    public string Massage { get { return _massage; } set { _massage = value; } }
+    //}
 
-    public class MessegeSender
+    //public class MessegeSender
+    //{
+    //    public void Send(Message message)
+    //    {
+    //        Console.WriteLine(message.Massage);
+    //    }
+    //}
+
+    //public class HelloMassage : Message
+    //{
+    //    public HelloMassage()
+    //    {
+    //        this.Massage = "Привет! Это игра Угадай число";
+    //    }
+    //}
+
+    //public class StartGameMassage : Message
+    //{
+    //    public StartGameMassage()
+    //    {
+    //        this.Massage = "Игра началась!Введи число!";
+    //    }
+    //}
+
+    //public class SuccessMassage : Message
+    //{
+    //    public SuccessMassage()
+    //    {
+    //        this.Massage = "Правильно! Поздравляю ты выйграл!";
+    //    }
+    //}
+
+    //public class FailureMassage : Message
+    //{
+    //    public FailureMassage()
+    //    {
+    //        this.Massage = "Попытки угадать закончились! Ты проиграл";
+    //    }
+    //}
+
+    //public class AttempMassage : Message
+    //{
+    //    public AttempMassage()
+    //    {
+    //        this.Massage = "Введите число попыток";
+    //    }
+    //}
+
+    //public class RangeMassage : Message
+    //{
+    //    public RangeMassage()
+    //    {
+    //        this.Massage = "Введите диапазон чисел";
+    //    }
+    //}
+    //public class ErrorMessage : Message
+    //{
+    //    Exception _ex;
+    //    public ErrorMessage(Exception Ex)
+    //    {
+    //        this._ex = Ex;
+    //        this.Massage = $"Что то не так! {_ex.Message}Попробуй еще раз! ";
+    //    }
+    //}
+
+
+    //public class RetryTakingValueAndAttemp : Message
+    //{
+    //    string _value;
+    //    int _attemps;
+    //    public RetryTakingValueAndAttemp(string value, int attemps)
+    //    {
+    //        _value = value;
+    //        _attemps = attemps;
+    //        this.Massage = $"Нет! Загаданное число {_value}! Осталось {_attemps} попыток!"; ;
+
+    //    }
+    //}
+
+    //public class OptionsMessage : Message
+    //{
+    //    public OptionsMessage()
+    //    {
+    //        this.Massage = "Хотите настроить игру? y/n";
+    //    }
+    //}
+
+    //public class Warning : Message
+    //{
+    //    public Warning()
+    //    {
+    //        this.Massage = "Что то не так! Возможно вы неправильно ввели!";
+    //    }
+    //}
+
+    //#endregion
+
+
+    #region ISP messeger 
+    public interface IMessage
     {
-        public void Send(Message message)
+        string Massage { get; }
+    }
+    public interface ISender
+    {
+        public void Send(IMessage message) { }
+    }
+    public class MessegeSender : ISender
+    {
+
+        public void Send(IMessage message)
         {
             Console.WriteLine(message.Massage);
         }
     }
 
-    public class HelloMassage : Message
+    public class HelloMassage : IMessage
     {
-        public HelloMassage()
-        {
-            this.Massage = "Привет! Это игра Угадай число";
-        }
+        string IMessage.Massage { get { return "Привет! Это игра Угадай число"; } }
+
+
     }
 
-    public class StartGameMassage : Message
+    public class StartGameMassage : IMessage
     {
-        public StartGameMassage()
-        {
-            this.Massage = "Игра началась!Введи число!";
-        }
+        string IMessage.Massage { get { return "Игра началась!Введи число!"; } }
+
+
+
     }
 
-    public class SuccessMassage : Message
+    public class SuccessMassage : IMessage
     {
-        public SuccessMassage()
-        {
-            this.Massage = "Правильно! Поздравляю ты выйграл!";
-        }
+        string IMessage.Massage { get { return "Правильно! Поздравляю ты выйграл!"; } }
+
+
     }
 
-    public class FailureMassage : Message
+    public class FailureMassage : IMessage
     {
-        public FailureMassage()
-        {
-            this.Massage = "Попытки угадать закончились! Ты проиграл";
-        }
+        string IMessage.Massage { get { return "Попытки угадать закончились! Ты проиграл"; } }
+
+
     }
 
-    public class AttempMassage : Message
+    public class AttempMassage : IMessage
     {
-        public AttempMassage()
-        {
-            this.Massage = "Введите число попыток";
-        }
+        string IMessage.Massage { get { return "Введите число попыток"; } }
+
+
     }
 
-    public class RangeMassage : Message
+    public class RangeMassage : IMessage
     {
-        public RangeMassage()
-        {
-            this.Massage = "Введите диапазон чисел";
-        }
+        string IMessage.Massage { get { return "Введите диапазон чисел"; } }
+
     }
-    public class ErrorMessage : Message
+    public class ErrorMessage : IMessage
     {
         Exception _ex;
         public ErrorMessage(Exception Ex)
         {
-            this._ex = Ex;
-            this.Massage = $"Что то не так! {_ex.Message}Попробуй еще раз! ";
+            _ex = Ex;
         }
+        string IMessage.Massage { get { return $"Что то не так! {_ex.Message}Попробуй еще раз! "; } }
+
+
+
     }
 
 
-    public class RetryTakingValueAndAttemp : Message
+    public class RetryTakingValueAndAttemp : IMessage
     {
         string _value;
         int _attemps;
@@ -87,158 +192,23 @@ namespace OTUS_HW_LESSON_9
         {
             _value = value;
             _attemps = attemps;
-            this.Massage = $"Нет! Загаданное число {_value}! Осталось {_attemps} попыток!"; ;
-
         }
+        string IMessage.Massage { get { return $"Нет! Загаданное число {_value}! Осталось {_attemps} попыток!"; } }
+
     }
 
-    public class OptionsMessage : Message
+    public class OptionsMessage : IMessage
     {
-        public OptionsMessage()
-        {
-            this.Massage = "Хотите настроить игру? y/n";
-        }
+        string IMessage.Massage { get { return "Хотите настроить игру? y/n"; } }
+
+
     }
 
-    public class Warning : Message
+    public class Warning : IMessage
     {
-        public Warning()
-        {
-            this.Massage = "Что то не так! Возможно вы неправильно ввели!";
-        }
+        string IMessage.Massage { get { return "Что то не так! Возможно вы неправильно ввели!"; } }
+
     }
-
-    #endregion
-
-
-    #region ISP messeger 
-    //public interface IMessage
-    //{    
-    //    string Massage { get ;  }
-    //}
-
-    //public class MessegeSender
-    //{
-
-    //    public void Send(IMessage message)
-    //    {
-    //        Console.WriteLine(message.Massage);
-    //    }
-    //}
-
-    //public class HelloMassage: IMessage
-    //{
-    //    string IMessage.Massage { get { return "Привет! Это игра Угадай число"; } }
-
-    //    //public void SendMassage()
-    //    //{
-    //    //    Console.WriteLine("Привет! Это игра Угадай число");
-    //    //}
-    //}
-
-    //public class StartGameMassage : IMessage
-    //{
-    //    string IMessage.Massage { get { return "Игра началась!Введи число!"; } }
-
-    //    //public void SendMassage()
-    //    //{
-    //    //    Console.WriteLine("Игра началась! Введи число!");
-    //    //}
-
-    //}
-
-    //public class SuccessMassage : IMessage
-    //{
-    //    string IMessage.Massage { get { return "Правильно! Поздравляю ты выйграл!"; } }
-
-    //    //public void SendMassage()
-    //    //{
-    //    //    Console.WriteLine("Правильно! Поздравляю ты выйграл!");
-    //    //}
-    //}
-
-    //public class FailureMassage : IMessage
-    //{
-    //    string IMessage.Massage { get { return "Попытки угадать закончились! Ты проиграл"; } }
-
-    //    //public void SendMassage()
-    //    //{
-    //    //    Console.WriteLine("Попытки угадать закончились! Ты проиграл");
-    //    //}
-    //}
-
-    //public class AttempMassage : IMessage
-    //{
-    //    string IMessage.Massage { get { return "Введите число попыток"; } }
-
-    //    //public void SendMassage()
-    //    //{
-    //    //    Console.WriteLine("Введите число попыток");
-    //    //}
-    //}
-
-    //public class RangeMassage : IMessage
-    //{
-    //    string IMessage.Massage { get { return "Введите диапазон чисел"; } }
-
-    //    //public void SendMassage()
-    //    //{
-    //    //    Console.WriteLine("Введите диапазон чисел");
-    //    //}
-    //}
-    //public class ErrorMessage : IMessage
-    //{
-    //    Exception _ex;
-    //    public ErrorMessage(Exception Ex)
-    //    {
-    //        _ex = Ex;
-    //    }
-    //    string IMessage.Massage { get { return $"Что то не так! {_ex.Message}Попробуй еще раз! "; } }
-
-
-    //    //public void SendMassage()
-    //    //{
-    //    //        Console.WriteLine($"Что то не так! {_ex.Message}Попробуй еще раз! ");
-    //    //}
-    //}
-
-
-    //public class RetryTakingValueAndAttemp : IMessage
-    //{
-    //    string _value;
-    //    int _attemps;
-    //    public RetryTakingValueAndAttemp(string value, int attemps)
-    //    {
-    //            _value = value;
-    //            _attemps = attemps;
-    //    }
-    //    string IMessage.Massage { get { return $"Нет! Загаданное число {_value}! Осталось {_attemps} попыток!"; } }
-
-    //    //public void SendMassage()
-    //    //{
-    //    //    Console.WriteLine($"Нет! Загаданное число {_value}! Осталось {_attemps} попыток!");
-    //    //}
-    //}
-
-    //public class OptionsMessage : IMessage
-    //{
-    //    string IMessage.Massage { get { return "Хотите настроить игру? y/n"; } }
-
-    //    //public void SendMassage()
-    //    //{
-    //    //    Console.WriteLine("Хотите настроить игру? y/n");
-    //    //}
-    //}
-
-    //public class Warning : IMessage
-    //{
-    //    string IMessage.Massage { get { return "Что то не так! Возможно вы неправильно ввели!"; } }
-
-    //    //public void SendMassage()
-    //    //{
-    //    //    Console.WriteLine("Что то не так! Возможно вы неправильно ввели!");
-    //    //}
-    //}
     #endregion
 
     //public class Messeger

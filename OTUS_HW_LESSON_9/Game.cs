@@ -9,11 +9,11 @@ namespace OTUS_HW_LESSON_9
     public class Game
     {
 
-        MessegeSender _sender;
+        ISender _sender;
         Options _options;
 
 
-        public Game(Options options, MessegeSender sender) 
+        public Game(Options options, ISender sender) 
         {
             _options = options;
             _sender = sender;

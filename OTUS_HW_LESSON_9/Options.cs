@@ -24,7 +24,7 @@ namespace OTUS_HW_LESSON_9
         }
 
 
-        public Options GameConfigure(MessegeSender sender)
+        public Options GameConfigure(ISender sender)
         {
             bool sasuccess = false;
             Options options = new Options();
